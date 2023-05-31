@@ -1,0 +1,83 @@
+{% extends './base.html' %}
+{% block title %} Gestión de cursos {% endblock %}
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestión de cursos</h2>
+
+        <div class="card">
+            <div class="card-body">
+                <form action="registrardocente" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="txtIdDocente" name="txtIdDocente" placeholder="IdDocente">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="txtApellido" name="txtApellido" placeholder="Apellido">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="txtNombre" name="txtNombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="date" id="dateFIngreso" name="dateFIngreso" >
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="txtDni" name="txtDni" >
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="number" id="numTelefono" name="numTelefono">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="sCurso" name="sCurso">
+                            <option value="" disabled selected>Seleccione un curso</option>
+                            {% for curso in cursos %}
+                                <option value="{{ curso.codigo }}">{{ curso.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn btn-success" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Docentes</h1>
+        <table class="table table-primary table-striped">
+            <thead>
+                <tr>
+                    <th>IdDocente</th>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Fecha de Ingreso</th>
+                    <th>DNI</th>
+                    <th>Telefono</th>
+                    <th>Curso</th>
+                    <th colspan="2">Opciones de manejo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in docentes %}
+                    <tr>
+                        <td>{{d.IdDocente}}</td>
+                        <td>{{d.Apellido}}</td>
+                        <td>{{d.Nombre}}</td>
+                        <td>{{d.FIngreso}}</td>
+                        <td>{{d.Dni}}</td>
+                        <td>{{d.Telefono}}</td>
+                        <td>{{d.Curso}}</td>
+                        <td><a href="ediciondocente/{{d.IdDocente}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminardocente/{{d.IdDocente}}" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

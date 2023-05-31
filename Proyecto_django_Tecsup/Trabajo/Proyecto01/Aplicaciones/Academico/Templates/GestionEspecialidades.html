@@ -1,0 +1,65 @@
+{% extends './base.html' %}
+{% block title %}Gestión de especialidades{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestión de especialidades</h2>
+
+        <div class="card">
+            <div class="card-body">
+                <form action="registrarespecialidad" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="txtIdEspecialidad" name="txtIdEspecialidad" placeholder="IdEspecialidad">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="txtNombre" name="txtNombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" placeholder="Descripción"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="sCurso" name="sCurso">
+                            <option value="" disabled selected>Seleccione un curso</option>
+                            {% for curso in cursos %}
+                                <option value="{{ curso.codigo }}">{{ curso.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn btn-success" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de especialidades</h1>
+        <table class="table table-primary table-striped">
+            <thead>
+                <tr>
+                    <th>IdEspecialidad</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Curso</th>
+                    <th colspan="2">Opciones de manejo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for especialidad in especialidades %}
+                    <tr>
+                        <td>{{ especialidad.IdEspecialidad }}</td>
+                        <td>{{ especialidad.Nombre }}</td>
+                        <td>{{ especialidad.Descripcion }}</td>
+                        <td>{{ especialidad.Curso }}</td>
+                        <td><a href="edicionespecialidad/{{ especialidad.IdEspecialidad }}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarespecialidad/{{ especialidad.IdEspecialidad }}" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

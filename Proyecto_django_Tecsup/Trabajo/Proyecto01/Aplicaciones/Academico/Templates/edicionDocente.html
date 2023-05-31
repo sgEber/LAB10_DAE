@@ -1,0 +1,54 @@
+{% extends './Base.html' %}
+
+{% block title %}Gestión de Cursos{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Edicion de Docentes</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'editarDocente' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="txtcodigo" class="form-label">Código:</label>
+                        <input type="text" name="txtcodigo" class="form-control" id="txtcodigo" value="{{docente.IdDocente}}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtnombre" class="form-label">Nombre:</label>
+                        <input type="text" name="txtnombre" class="form-control" id="txtnombre" value="{{docente.Nombre}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtapellido" class="form-label">Apellido:</label>
+                        <input type="text" name="txtapellido" class="form-control" id="txtapellido" value="{{docente.Apellido}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtfecha_ingreso" class="form-label">Fecha de Ingreso:</label>
+                        <input type="date" name="txtfingreso" class="form-control" id="txtfingreso" value="{{docente.FIngreso}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numdni" class="form-label">DNI:</label>
+                        <input type="txt" name="txtdni" class="form-control" id="txtdni" value="{{docente.Dni}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numtelefono" class="form-label">Telefono:</label>
+                        <input type="number" name="numtelefono" class="form-control" id="numtelefono" value="{{docente.Telefono}}">
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-control" id="sCurso" name="sCurso">
+                            <option value="" disabled selected>Seleccione un curso</option>
+                            {% for curso in cursos %}
+                                <option value="{{ curso.codigo }}">{{ curso.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
